@@ -15,9 +15,10 @@
             android:label="Criar nota"
             android:parentActivityName=".activities.ListNotesActivity" />
 
+
         <activity
             android:name=".activities.ListNotesActivity"
-            android:label="Todas as notas">
+            android:label="NoteApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

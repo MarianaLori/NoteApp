@@ -1,0 +1,41 @@
+Existem 2 modos de armazenar os dados do usuário na aplicação:
+- Singleton
+É uma classe que permite apenas uma instância dela.
+Modo volátil, isso significa que os dados serão perdidos quando o usuário desinstala o aplicativo, limpa o cache, etc
+
+- SQLite
+Guarda os dados de maneira persistente, usando um banco mesmo pra ele
+
+
+Por organização, criamos um novo pacote chamado "data, que vai guardar as classes relacionadas aos dados.
+engrenagem > desmarca "compact middle packages" > botão direito no nome do app > packages
+
+O Kotlin já tem uma classe voltada para dados.
+botão direito no pacote de dados > new > Kotlin file > data class
+
+======== SINGLETON =========
+pacote de dados (data) > new > Kotlin Class/File > object
+
+Então, o Singleton já é o objeto criado, vc não consegue instanciar um igual
+
+******** DEBUG NO ANDROID *********
+setar o breakpoint na linha onde a coisa começa a acontecer
+
+
+======== Vamos criar a lista de notas na nossa atividade ========
+Pra isso, a gente joga no layout da lista um Scroll View (antes do botão).
+O ScrollView vem com o LinearLayout dentro dele, vou definir o id dele.
+
+Agora, vamos criar o layout de um item (único)
+botão direito layout > Layout Resource File > apaga o conteúdo do "root element" e joga CardView (isso voltado ao que precisamos, cartõezinhos que mostram as notas)
+Vou jogar um layout no meu CardViwe, nesse caso, LinearLayout vertical
+
+Agora vamos montar de fato o view da lista, então vamos pro código
+
+
+
+
+No cartão:
+useCompactPadding -> ganha uma bordinha show
+cardElevation -> efeito de sombra pra dar ilusão de o cartão estar sobreposto
+layoutHeight -> nesse caso, wrapContent pra ele ficar mais bonitinho do tamanho da nota
