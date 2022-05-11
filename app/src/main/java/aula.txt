@@ -1,4 +1,7 @@
-Existem 2 modos de armazenar os dados do usuário na aplicação:
+No aplicativo, a gente precisa tratar os dados para armazená-los. Esse armazenamento pode ocorrer de forma local ou online.
+Você pode também fazer de maneira contingente (ex: armazenar os dados localmente quando o usuário estiver sem internet,
+assim que a internet retornar, os dados são enviados para a nuvem).
+Existem 2 modos de armazenar os dados do usuário na aplicação (armazenamento local):
 - Singleton
 É uma classe que permite apenas uma instância dela.
 Modo volátil, isso significa que os dados serão perdidos quando o usuário desinstala o aplicativo, limpa o cache, etc
@@ -18,9 +21,9 @@ pacote de dados (data) > new > Kotlin Class/File > object
 
 Então, o Singleton já é o objeto criado, vc não consegue instanciar um igual
 
-******** DEBUG NO ANDROID *********
-setar o breakpoint na linha onde a coisa começa a acontecer
-
+          ********************* DEBUG NO ANDROID ************************
+          * setar o breakpoint na linha onde a coisa começa a acontecer *
+          ***************************************************************
 
 ======== Vamos criar a lista de notas na nossa atividade ========
 Pra isso, a gente joga no layout da lista um Scroll View (antes do botão).
@@ -32,10 +35,46 @@ Vou jogar um layout no meu CardViwe, nesse caso, LinearLayout vertical
 
 Agora vamos montar de fato o view da lista, então vamos pro código
 
-
-
-
 No cartão:
 useCompactPadding -> ganha uma bordinha show
 cardElevation -> efeito de sombra pra dar ilusão de o cartão estar sobreposto
 layoutHeight -> nesse caso, wrapContent pra ele ficar mais bonitinho do tamanho da nota
+
+
+=============== SQLite ==================
+Como se fosse uma base de dados, mas é um arquivo no Android.
+ROOM {
+   > é uma camada de abstração do Android para acesso ao SQLite
+   > permite o acesso rápido a banco de dados com consultas relacionais
+   > bastante declarativo (database, entidade, dao)
+   > implementa automaticamente os DAOS e é usado para obter acesso a eles
+}
+Database:
+    - representa o banco de dados
+    - necessário anotar uma classe com a anotação @Database
+    - deve ser classe abstrata que estende RoomDatabase
+    - deve incluir a lista de entidades associadas ao banco de dados da anotação
+    - deve conter ao menos um método abstrato que possua 0 argumentos e terotne (ahahah) uma classe anotada com @dao
+Entidades:
+    Precisamos definir uma data class e marcá-la com as anotações @Entity (para toda a classe), @Primary Key
+
+Passos:
+   1. build.gradle(module) > em "dependencies" jogar implementation 'androidx.room:room-runtime:2.3.0' > colocar nas primeiras linhas apply plugin: 'kotlin-kapt'
+                                                   kapt 'androidx.room:room-compiler:2.3.0'
+   2. Criar a classe de dados e mapeá-la:
+        - Anotar a classe com @Entity (transforma uma classe em tabela)
+        - Definir as chaves @PrimaryKey(autoGenerate = true), isso porque nossa chave primária é auto incrementada
+        - Como a chave primária é gerada automaticamente, vamos indicar que aquele atributo é opcional
+        - Se precisar renomear o nome de uma coluna, usa @columnInfo("nome que vc quer")
+   3. Criar o DAO (aqui no Kotlin, é uma interface que o ROOM implementa):
+        - Botão direito na pasta Data > new > Kotlin Class/File > Interface.
+        - Tendo o DAO criado, insere a anotação @DAO
+        - Cria os métodos
+   4. Criar a classe database, que é uma classe abstrata:
+        - Botão direito na pasta Data > Kotlin Class/File > Class e o nome
+        - Declarar a classe como abstrata
+        - Na frente do nome da classe, inserir : RoomDatabase()
+        - Colocar a anotação @Database e () para declarar as entidades e inserir o "version"
+        - Criar a função abstrata, indicando com : DAO na frente, dizendo que para cada DAO vc tem uma função daquela
+
+
