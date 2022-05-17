@@ -78,3 +78,4 @@ Passos:
         - Criar a função abstrata, indicando com : DAO na frente, dizendo que para cada DAO vc tem uma função daquela
 
 
+Analytics e Crashlytics: análise da aplicação, um mapeamento completo do aplicativo e do uso
